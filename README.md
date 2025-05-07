@@ -28,11 +28,11 @@ GPU frequency       | 1 GHZ
 
 There are 3 applications in this demo:
 
-  ![test](Content/image/surround_view_system_architect.jpg)
+  ![test](App/Content/image/surround_view_system_architect.jpg)
 
 Perform Lens calibration and system calibration to get intrinsic parameter of cameras and extrinsic parameter. 
 
-  ![test](Content/image/surround_view_software.jpg)
+  ![test](App/Content/image/surround_view_software.jpg)
 
 ###  1. Lens capture application:
 For a proper lens (intrinsic camera) calibration, the image capturing for each separate camera must be done first.
@@ -87,7 +87,7 @@ USB Keyboard                                      | :white_check_mark:
 
 ### 1 Setup the hardware connection
 
-  ![test](Content/image/surround_view_hardware_connection.jpg)
+  ![test](App/Content/image/surround_view_hardware_connection.jpg)
 
 ### 2 Build the yocto image
 This demo requires aligning 4 camera previews, the patch is included in this meta layer.
@@ -141,16 +141,16 @@ Steps for compiling and running the SV3D project on i.MX target board:
   In this demo, an enclosure printed by 3D printer is used to fix the camera positions.
   If you don’t have this enclosure, you need to find a way to fix the camera.
 
-  ![test](Content/image/surround_view_enclosure.jpg)
+  ![test](App/Content/image/surround_view_enclosure.jpg)
 
 ## 4 Results
   Here is the demo using camera input:
   
-  ![test](Content/image/output_camera.gif)
+  ![test](App/Content/image/output_camera.gif)
 
   Demo using video input:
   
-  ![test](Content/image/output_video.gif)
+  ![test](App/Content/image/output_video.gif)
 
 ## 5. Release Notes
 
@@ -160,4 +160,4 @@ Version | Description                         | Date
 
 ## Licensing
 
-*i.MX Surround View* is licensed under the [BSD_3_Clause](./Licenses/BSD-3-clause.txt).
+*i.MX Surround View* is licensed under the [BSD_3_Clause](./App/Licenses/BSD-3-clause.txt).
