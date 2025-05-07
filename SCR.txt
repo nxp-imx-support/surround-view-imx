@@ -1,0 +1,21 @@
+NXP Software Content Register
+ 
+Release - 1.4
+Feb 2025
+ 
+Outgoing License: LA_OPT_Online Code Hosting NXP_Software_License - v1.3 December 2024
+License File:     LICENSE.txt
+ 
+--------------------------------------------
+ 
+Release:                   surround-view
+Outgoing License:          LA_OPT_Online Code Hosting NXP_Software_License - v1.3 December 2024
+License Files:             LICENSE.txt
+Package Category:          Demo application
+Type of content:           Source, calibration data, calibration templates, 3D-printer model, images, and car model files
+Description and comments:  Surround view 3D sample application
+Release Location:          NXP.com
+Origin:                    NXP (LA_OPT_Online Code Hosting NXP_Software_License)
+                           OpenGL Mathematics (MIT) - https://github.com/g-truc/glm
+                           OpenCV (BSD-3-clause) - https://sourceforge.net/projects/opencvlibrary/
+                           Wayland and weston (MIT) - https://github.com/krh/weston/blob/master/clients/simple-egl.c

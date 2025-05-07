@@ -1,0 +1,69 @@
+#/*******************************************************************************
+#*
+#* Copyright 2017,2022 NXP
+#*
+#* See the LICENSE file distributed for more details.
+#* 
+#*
+#*******************************************************************************/
+APPNAME			= main
+SRCDIR1			= Calibration
+SRCDIR2			= Render
+SRCDIR3			= Capturing
+CD				= cd
+MAKE			= make
+EGL_FLAVOR 		= xdg
+DEVICE			= IMX95
+INPUT			= camera
+
+export EGL_FLAVOR
+export DEVICE
+export INPUT
+
+all: $(APPNAME)
+
+$(APPNAME): 
+
+				$(CD) $(SRCDIR1); \
+#				$(MAKE) -f Makefile clean; \
+#				$(MAKE) -f Makefile distclean; \
+				$(MAKE) -f Makefile install;
+
+				$(CD) $(SRCDIR2); \
+#				$(MAKE) -f Makefile clean; \
+#				$(MAKE) -f Makefile distclean; \
+				$(MAKE) -f Makefile install; 
+
+				$(CD) $(SRCDIR3); \
+#				$(MAKE) -f Makefile clean; \
+#				$(MAKE) -f Makefile distclean; \
+				$(MAKE) -f Makefile install;
+
+
+clean:
+
+	$(CD) $(SRCDIR1); \
+	$(MAKE) -f Makefile clean; 
+
+	$(CD) $(SRCDIR2); \
+	$(MAKE) -f Makefile clean; 	
+
+	$(CD) $(SRCDIR3); \
+	$(MAKE) -f Makefile clean; 	
+
+distclean: clean
+
+	$(CD) $(SRCDIR1); \
+	$(MAKE) -f Makefile distclean; 
+
+	$(CD) $(SRCDIR2); \
+	$(MAKE) -f Makefile distclean; 
+
+	$(CD) $(SRCDIR3); \
+	$(MAKE) -f Makefile distclean; 
+
+install:
+	mkdir -p ${DESTDIR}/SV3D-1.4/App
+	cp -rf ../Build $(DESTDIR)/SV3D-1.4/App
+	cp -rf ../Content $(DESTDIR)/SV3D-1.4/App
+	cp -rf ../../Tools $(DESTDIR)/SV3D-1.4

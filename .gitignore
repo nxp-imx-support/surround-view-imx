@@ -1,0 +1,5 @@
+*.o
+*.d
+*.mp4
+.vscode
+App/Build*
