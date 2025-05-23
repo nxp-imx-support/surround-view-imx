@@ -66,7 +66,7 @@ v4l2Camera::v4l2Camera(int in_width, int in_height, int in_pixel_fmt, int in_mem
 
 	th_arg = (thread_arg){0, "", NULL, NULL};
 
-	device = string(in_device) + ".avi";
+	device = string(in_device) + ".m4v";
 	//device = string(in_device) + ".mp4";
 	//cout<<"Camera Device : "<< device << endl;
 
