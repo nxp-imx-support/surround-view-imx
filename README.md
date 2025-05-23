@@ -89,10 +89,7 @@ USB Keyboard                                      | :white_check_mark:
 
   ![test](App/Content/image/surround_view_hardware_connection.jpg)
 
-### 2 Build the yocto image
-This demo requires aligning 4 camera previews, the patch is included in this meta layer.
-
-### 3 Choose the correct device tree
+### 2 Choose the correct device tree
 In this demo, choose imx95-19x19-evk-ox03c10-isp-it6263-lvds0.dtb
 
 ``` bash
@@ -100,7 +97,7 @@ u-boot=> setenv fdtfile imx95-19x19-evk-ox03c10-isp-it6263-lvds0.dtb
 u-boot=> saveenv 
 ```
 
-### 4 Build the Application
+### 3 Build the Application
 Steps for compiling and running the SV3D project on i.MX target board:
   1. Git clone the application source code.
   2. source the toolchain.
@@ -121,7 +118,7 @@ Steps for compiling and running the SV3D project on i.MX target board:
     make -f Makefile.xdg INPUT=video  
 ```  
 
-### 5 Push and run the application
+### 4 Push and run the application
   1. push the whole surround-view folder to i.MX95 EVK
   2. Set the environment parameter:
 
@@ -137,7 +134,7 @@ Steps for compiling and running the SV3D project on i.MX target board:
 
   4. Execute the 'SV3D-1.4_cameras' binary.
 
-### 6 Fix the position of 4 cameras
+### 5 Fix the position of 4 cameras
   In this demo, an enclosure printed by 3D printer is used to fix the camera positions.
   If you don’t have this enclosure, you need to find a way to fix the camera.
 
@@ -152,11 +149,23 @@ Steps for compiling and running the SV3D project on i.MX target board:
   
   ![test](App/Content/image/output_video.gif)
 
-## 5. Release Notes
+## 5 Known issue
+This demo requires aligning 4 camera previews, in L6.6.52, libcamera don't support the configuration of the camera orientation.
+We can change the sensor driver to ajust the camera orientation:
 
-Version | Description                         | Date
----     | ---                                 | ---
-1.0.0   | Initial release                     | Mar 11<sup>th</sup> 2025
+``` bash  
+drivers/media/i2c/ox03c10.c
+-	{ 0x3820, 0x20 }, { 0x3821, 0x19 }, { 0x3832, 0x00 }, { 0x3834, 0x00 }, { 0x384c, 0x02 },
++	{ 0x3820, 0x00 }, { 0x3821, 0x19 }, { 0x3832, 0x00 }, { 0x3834, 0x00 }, { 0x384c, 0x02 },
+``` 
+
+libcamera will support camera orientation configuration in the future release.
+
+## 6. Release Notes
+
+Version | Description                         | Date                           | tag
+---     | ---                                 | ---                            | --- 
+1.0.0   | Initial release                     | Mar 11<sup>th</sup> 2025       | imx_ec_sv_v1.0
 
 ## Licensing
 
