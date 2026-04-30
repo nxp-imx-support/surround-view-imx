@@ -36,6 +36,10 @@
 
 #include "xdg-shell-client-protocol.h"
 
+#define WL_PRIVATE
+#include "xdg-shell-protocol.c"
+#undef WL_PRIVATE
+
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
 

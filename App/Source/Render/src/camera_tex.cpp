@@ -105,6 +105,16 @@ static void Render(void)
 			//glBindTexture(GL_TEXTURE_2D, gTexObj[2 * camera]);
 			//glBindTexture(GL_TEXTURE_2D,v4l2_cameras[camera].getFrame());
 			glBindTexture(GL_TEXTURE_EXTERNAL_OES,v4l2_cameras[camera].getFrame());
+
+			if(v4l2_cameras[camera].NN_detected)
+			{
+				glUniform1i(glGetUniformLocation(renderProgram.getHandle(), "color"), 100);
+			}
+			else
+			{
+				glUniform1i(glGetUniformLocation(renderProgram.getHandle(), "color"), 0);
+			}
+
 			glUniform1i(glGetUniformLocation(renderProgram.getHandle(), "myTexture"), 0);
 			//mapFrame(i, camera);
 				
@@ -143,6 +153,16 @@ static void Render(void)
 			//glBindTexture(GL_TEXTURE_2D, gTexObj[2 * camera+ 1]);
 			//glBindTexture(GL_TEXTURE_2D,v4l2_cameras[camera].getFrame());
 			glBindTexture(GL_TEXTURE_EXTERNAL_OES,v4l2_cameras[camera].getFrame());
+
+			if(v4l2_cameras[camera].NN_detected)
+			{
+				glUniform1i(glGetUniformLocation(renderProgramWB.getHandle(), "color"), 100);
+			}
+			else
+			{
+				glUniform1i(glGetUniformLocation(renderProgramWB.getHandle(), "color"), 0);
+			}
+
 			glUniform1i(glGetUniformLocation(renderProgramWB.getHandle(), "myTexture"), 0);
 			//mapFrame(i, camera);		
 			

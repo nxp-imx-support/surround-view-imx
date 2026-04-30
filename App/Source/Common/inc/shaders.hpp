@@ -137,10 +137,16 @@ static const char s_f_shader_b_ec[] =
 	" out vec4 fragColor; \n "
 	" uniform samplerExternalOES myTexture; \n "
 	" uniform sampler2D myMask; \n "
+	" uniform int color; \n "
 	" uniform vec4 myGain; \n "
 	" void main() \n "
 	" {\n "
-		" fragColor = vec4(texture(myTexture, TexCoord).rgb, texture(myMask, TexCoord).r) * myGain; \n "
+	" if(color > 0)\n "
+	" { \n "
+		" fragColor = vec4(texture(myTexture, TexCoord).rgb, texture(myMask, TexCoord).r) *vec4(1.0, 0.6, 0.6, 1.0) * myGain ; \n "
+	" } else { \n "
+ 		" fragColor = vec4(texture(myTexture, TexCoord).rgb, texture(myMask, TexCoord).r) * myGain; \n "
+	" } \n "
 	" }\n ";
 
 // Fragment shader without blending and with exposure correction
@@ -152,10 +158,16 @@ static const char s_f_shader_ec[] =
 	" in vec2 TexCoord; \n "
 	" out vec4 fragColor; \n "
 	" uniform samplerExternalOES myTexture; \n "
+	" uniform int color; \n "
 	" uniform vec4 myGain; \n "
 	" void main() \n "
 	" {\n "
-		" fragColor = texture(myTexture, TexCoord) * myGain; \n "
+	" if(color > 0)\n "
+	" { \n "
+	"	fragColor = texture(myTexture, TexCoord) * vec4(1.0, 0.6, 0.6, 1.0) * myGain; \n "
+	" } else { \n "
+ 		" fragColor = texture(myTexture, TexCoord) * myGain; \n "
+	" } \n "
 	" }\n ";
 	
 // Fragment shader with blending and without exposure correction	
@@ -166,11 +178,17 @@ static const char s_f_shader_b[] =
 	" precision mediump float;\n "
 	" in vec2 TexCoord; \n "
 	" out vec4 fragColor; \n "
+	" uniform int color; \n "
 	" uniform samplerExternalOES myTexture; \n "
 	" uniform sampler2D myMask; \n "
 	" void main() \n "
 	" {\n "
-		" fragColor = vec4(texture(myTexture, TexCoord).rgb, texture(myMask, TexCoord).r); \n "
+	" if(color > 0)\n "
+	" { \n "
+		" fragColor = vec4(texture(myTexture, TexCoord).rgb, texture(myMask, TexCoord).r) *vec4(1.0, 0.6, 0.6, 1.0); \n "
+	" } else { \n "
+ 		" fragColor = vec4(texture(myTexture, TexCoord).rgb, texture(myMask, TexCoord).r); \n "
+	" } \n "
 	" }\n ";	
 
 // Fragment shader without blending and exposure correction	
@@ -282,8 +300,14 @@ static const char s_f_shader_bowl[] =
 	" precision mediump float;\n "
 	" in vec2 TexCoord; \n "
 	" out vec4 fragColor; \n "
+	" uniform int color; \n "
 	" uniform samplerExternalOES myTexture; \n "
 	" void main() \n "
 	" {\n "
-		" fragColor = vec4(texture(myTexture, TexCoord).rgb, 0.5); \n "
+	" if(color > 0)\n "
+	" { \n "
+		" fragColor = vec4(texture(myTexture, TexCoord).rgb, 0.5) * vec4(1.0, 0.6, 0.6, 1.0); \n "
+	" } else { \n "
+ 		" fragColor = vec4(texture(myTexture, TexCoord).rgb, 0.5); \n "
+	" } \n "
 	" }\n ";	

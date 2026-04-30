@@ -201,6 +201,13 @@ int v4l2Camera::captureSetup(gst_data* gst_shared)
 
 	}
 
+    for(int i = 0; i < NN_BOX_NUM; i++)
+    {
+        nn_box_result[i] = (float *)malloc(sizeof(float) * 6);
+        if (nn_box_result[i] == NULL)
+            printf("CaptureSetup() -> Failed to create memory for nn_box_result!\n");
+    }
+
 /*
 	gchar *pipeline_cmd = g_strdup_printf("libcamerasrc camera-name=%s "
 			"! video/x-raw,format=YUY2 ! imxvideoconvert_g2d video-warp-enable=true video-warp-coord-file=../Content/Buffer_952ae92c2c.bin ! video/x-raw,format=YUY2 "
@@ -209,7 +216,11 @@ int v4l2Camera::captureSetup(gst_data* gst_shared)
 
 	gchar *pipeline_cmd = g_strdup_printf("libcamerasrc camera-name=%s "
 			"! video/x-raw,format=YUY2 "
-			"! glupload ! appsink name=TextureSink",device.c_str());
+            "! tee name=t t. ! queue max-size-buffers=2 leaky=2 "
+            "! imxvideoconvert_g2d ! video/x-raw,width=300,height=300,format=RGB "
+            "! tensor_converter ! tensor_filter framework=tensorflow-lite model=../Content/nn_models/ssd_mobilenet_v1_quant_952_converted.tflite custom=Delegate:External,ExtDelegateLib:libneutron_delegate.so "
+            "! tensor_sink name=tensor_sink "
+			"t. ! glupload ! appsink name=TextureSink",device.c_str());
 
 	cout << "Camera pipeline: " << pipeline_cmd << endl;
 	gst_pipeline = gst_parse_launch(pipeline_cmd, NULL);
@@ -252,6 +263,14 @@ int v4l2Camera::startCapturing(void)
 
 	gst_pad_add_probe(gst_element_get_static_pad(sink, "sink"), GST_PAD_PROBE_TYPE_QUERY_DOWNSTREAM, v4l2Camera::OnQuery,
                       static_cast<gpointer>(this), nullptr);
+
+	gst_object_unref(sink);
+
+    //Add callback to tensor_sink to get inference result from NNStreamer
+    GstElement* tensor_sink = gst_bin_get_by_name(GST_BIN(gst_pipeline), "tensor_sink");
+    g_object_set(tensor_sink, "emit-signal", TRUE, nullptr);
+    g_signal_connect(G_OBJECT(tensor_sink), "new-data", G_CALLBACK(v4l2Camera::newNNDetection), this);
+    gst_object_unref(tensor_sink);
 
 	//cout << "pipeline Addr: "<< (uint32_t*)gst_context.pipeline << endl;
 	GstStateChangeReturn state_return = gst_element_set_state(gst_pipeline, GST_STATE_PLAYING);
@@ -381,4 +400,90 @@ GstFlowReturn v4l2Camera::OnNewSample(GstElement* appsink, gpointer data)
     }
 
     return GST_FLOW_OK;
+}
+void v4l2Camera::newNNDetection(GstElement *sink, GstBuffer *gstbuffer, gpointer data)
+{
+    v4l2Camera* self = static_cast<v4l2Camera*>(data);
+    //if (self->camera_num == 1)
+    //    cout << "new NN Detection result from camera " << self->camera_num << endl;
+
+    GstMemory *mem = NULL;
+    GstMapInfo info;
+    float *tmp_data = nullptr;
+
+    for (size_t i = 0; i < gst_buffer_n_memory(gstbuffer); i++)
+    {
+        g_mutex_lock(&self->frame_lock);
+        mem = gst_buffer_peek_memory(gstbuffer, i);
+        g_mutex_unlock(&self->frame_lock);
+        //cout << "mem points to " << (uint32_t*)mem << ", i is " << i << endl;
+        if (mem != NULL)
+        {
+            if (gst_memory_map(mem, &info, GST_MAP_READ))
+            {
+                tmp_data = (float *)(info.data);
+                switch (i)
+                {
+                    // output tensor 0, The locations of the detected boxes
+                    case 0:
+                        for (int j = 0; j < NN_BOX_NUM; j++)
+                            for (int k = 0; k < 4; k++) {
+                                if (*tmp_data < 0) //boxes position should lie within 0-1
+                                    self->nn_box_result[j][k] = 0;
+                                else if (*tmp_data > 1)
+                                    self->nn_box_result[j][k] = 1;
+                                else
+                                    self->nn_box_result[j][k] = *tmp_data;
+                                tmp_data++;
+                            }
+                        break;
+                    // output tensor 1, The categories of the detected boxes.
+                    case 1:
+                        for (int j = 0; j < NN_BOX_NUM; j++) {
+                            self->nn_box_result[j][4] = *tmp_data;
+                            tmp_data++;
+                        }
+                        break;
+                    // output tensor 2, The scores of the detected boxes.
+                    case 2:
+                        for (int j = 0; j < NN_BOX_NUM; j++) {
+                            self->nn_box_result[j][5] = *tmp_data;
+                            tmp_data++;
+                        }
+                        break;
+                    // output tensor 3, The number of the detected boxes.
+                    case 3:
+                        if (*tmp_data != 10)
+                            cout << "number of detected boxes is incorrect " << *tmp_data << endl;
+                        break;
+                    default:
+                        g_printerr("NN detection output tensor number is invalid\n");
+                }
+                gst_memory_unmap(mem, &info);
+            }
+            else
+                g_printerr("Failed peek memory\n");
+        }
+    }
+	//self->NN_detected
+	self->NN_detected = false;
+	for (int i = 0; i < NN_BOX_NUM; i++)
+    {
+       if(self->nn_box_result[i][4] == 0 &&  self->nn_box_result[i][5] > 0.65)
+	   {
+			self->NN_detected = true;
+			cout << "person found on camera : "<<self->camera_num<<", credibility:"<< self->nn_box_result[i][5]<< endl;
+	   }
+	}
+    /*if (self->camera_num == 1)
+    {
+        cout << "nn_box_result: " << "self->camera_num:" << self->camera_num << endl;
+        for (int i = 0; i < NN_BOX_NUM; i++)
+        {
+            for (int j = 0; j < 6; j++)
+                cout << self->nn_box_result[i][j] << " ";
+            cout << endl;
+        }
+    }*/
+
 }

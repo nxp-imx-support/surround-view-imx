@@ -59,6 +59,7 @@ using namespace std;
  * Macros
  **********************************************************************************************************************/
 #define BUFFER_NUM		4	// number of capture buffers
+#define NN_BOX_NUM      10  // number of max detection box from NNStreamer
 
 /**********************************************************************************************************************
  * Types
@@ -115,6 +116,7 @@ class v4l2Camera {
 	public:
 		int fill_buffer_inx;	// 1: buffer is filled with camera data, 0: not filled
 		videobuffer buffers[BUFFER_NUM]; // buffers
+		float* nn_box_result[NN_BOX_NUM];  // store the result of nn detection box, [][0-3] is y0, x0, y1, x1, [][4] is class index, [][5] is score
 		static pthread_mutex_t th_mutex;	// Mutex for camera access sinchronization
 		static int exit_flag;				// Exit flag
 
@@ -128,6 +130,8 @@ class v4l2Camera {
     	GstBuffer* buffer_render;
 
 		int camera_num = 0;
+
+		bool NN_detected = false;
 
 		int getWidth(void) {return width;}		// Camera frame width
 		int getHeight(void) {return height;}	// Camera frame height
@@ -249,6 +253,7 @@ class v4l2Camera {
 		 **************************************************************************************************************/
 		static void* getFrameThread(void* input_args);
 		static GstFlowReturn OnNewSample(GstElement* appsink, gpointer data);
+		static void newNNDetection(GstElement *sink, GstBuffer *gstbuffer, gpointer data);
 		static GstPadProbeReturn OnQuery(GstPad* pad, GstPadProbeInfo* info, gpointer data);
 };
 
