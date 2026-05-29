@@ -1,15 +1,15 @@
 NXP Software Content Register
  
-Release - 1.4
-Feb 2025
+Release - 1.5
+May 2026
  
-Outgoing License: LA_OPT_Online Code Hosting NXP_Software_License - v1.3 December 2024
+Outgoing License: LA_OPT_Online Code Hosting NXP_Software_License - v1.4 May 2025
 License File:     LICENSE.txt
  
 --------------------------------------------
  
 Release:                   surround-view
-Outgoing License:          LA_OPT_Online Code Hosting NXP_Software_License - v1.3 December 2024
+Outgoing License:          LA_OPT_Online Code Hosting NXP_Software_License - v1.4 May 2025
 License Files:             LICENSE.txt
 Package Category:          Demo application
 Type of content:           Source, calibration data, calibration templates, 3D-printer model, images, and car model files
@@ -19,3 +19,14 @@ Origin:                    NXP (LA_OPT_Online Code Hosting NXP_Software_License)
                            OpenGL Mathematics (MIT) - https://github.com/g-truc/glm
                            OpenCV (BSD-3-clause) - https://sourceforge.net/projects/opencvlibrary/
                            Wayland and weston (MIT) - https://github.com/krh/weston/blob/master/clients/simple-egl.c
+
+--------------------------------------------
+
+Release:                   ssd_mobilenet_v1_quant_952_converted.tflite
+Outgoing License:          Apache 2.0
+License Files:             https://www.apache.org/licenses/LICENSE-2.0
+Package Category:          Model Data
+Type of content:           Binary
+Description and comments:  Detection model
+Release Location:          NXP.com
+Origin:                    NXP (Apache-2.0)

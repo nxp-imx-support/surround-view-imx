@@ -9,7 +9,7 @@ The NXP Surround View System is a technology which provides a 360-degree wraparo
 
 ## 1 Software Overview
 
->**NOTE:** Evaluated on BSP LF-6.6.52_2.2.0.
+>**NOTE:** Evaluated on BSP LF-6.18.2-1.0.0.
 
 i.MX Board          | Main Software Components
 ---                 | ---
@@ -62,6 +62,8 @@ OpenCV library is used for images, videos and masks loading.
 Assimp library is used for 3D car model loading.
 GLM library is used for view rotation/translation on the screen.
 OpenGL ES library is used for rendering.
+
+Person detection has been added in this version. Detected pedestrians are highlighted in red according to their direction.
 
 There are 2 input types in this demo, camera input and video input, camera input uses 4 fisheye cameras, video input uses 4 clips of video instead of real cameras.
 
@@ -167,6 +169,7 @@ libcamera will support camera orientation configuration in the future release.
 
 Version | Description                         | Date                           | tag
 ---     | ---                                 | ---                            | --- 
+1.1.0   | Version upgrade                     | May 29<sup>th</sup> 2026       | imx_ec_sv_v1.1
 1.0.0   | Initial release                     | Mar 11<sup>th</sup> 2025       | imx_ec_sv_v1.0
 
 ## Licensing
