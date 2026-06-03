@@ -54,16 +54,17 @@ It renders the camera frames on a prepared 3D mesh and blends them.
   2. Load blending mask from external files.
   3. Load 3D car model.
   4. Load camera frames from static images.
-  5. Directly map the camera frames on 3D plane with use of OpenGL.
-  6. Blend the frames with use of OpenGL shaders.
-  7. Apply exposure correction.
+  5. Perform NPU-based pedestrian detection on each camera frame.
+  6. Directly map the camera frames on 3D plane with use of OpenGL.
+  7. Blend the frames with use of OpenGL shaders.
+  8. Apply exposure correction.
 
 OpenCV library is used for images, videos and masks loading.
 Assimp library is used for 3D car model loading.
 GLM library is used for view rotation/translation on the screen.
 OpenGL ES library is used for rendering.
 
-Person detection has been added in this version. Detected pedestrians are highlighted in red according to their direction.
+Pedestrian detection has been added in this version. Detected pedestrians are highlighted in red according to their direction.
 
 There are 2 input types in this demo, camera input and video input, camera input uses 4 fisheye cameras, video input uses 4 clips of video instead of real cameras.
 
@@ -127,7 +128,8 @@ Steps for compiling and running the SV3D project on i.MX target board:
   2. Set the environment parameter:
 
 ``` bash  
-    export LD_LIBRARY_PATH=/usr/lib/plugins/wayland-shell-integration/
+	export LD_LIBRARY_PATH=/usr/lib/plugins/wayland-shell-integration/
+	export LIBCAMERA_PIPELINES_MATCH_LIST='nxp/neo,imx8-isi,uvc'
 ```  
 
   3. Go to the App/Build folder, Copy the calibration file.
@@ -153,23 +155,27 @@ Steps for compiling and running the SV3D project on i.MX target board:
   
   ![test](App/Content/image/output_video.gif)
 
-## 5 Known issue
-This demo requires aligning 4 camera previews, in L6.6.52, libcamera don't support the configuration of the camera orientation.
-We can change the sensor driver to ajust the camera orientation:
+  Demo with Pedestrian detection:
+  
+  ![test](App/Content/image/Pedestrian_detection.jpg)
 
-``` bash  
-drivers/media/i2c/ox03c10.c
--	{ 0x3820, 0x20 }, { 0x3821, 0x19 }, { 0x3832, 0x00 }, { 0x3834, 0x00 }, { 0x384c, 0x02 },
-+	{ 0x3820, 0x00 }, { 0x3821, 0x19 }, { 0x3832, 0x00 }, { 0x3834, 0x00 }, { 0x384c, 0x02 },
-``` 
+## 5. Change history
 
-libcamera will support camera orientation configuration in the future release.
+### [1.1.0] - 2026-06-03
+**-New Features**
+- Added NPU-based pedestrian detection.
+- Highlight pedestrians in red according to their direction.
+
+### [1.0.0] - 2025-03-11
+**-Initial Release**
+- First public release of Surround View system.
+
 
 ## 6. Release Notes
 
 Version | Description                         | Date                           | tag
 ---     | ---                                 | ---                            | --- 
-1.1.0   | Version upgrade                     | May 29<sup>th</sup> 2026       | imx_ec_sv_v1.1
+1.1.0   | Version upgrade                     | June 03<sup>th</sup> 2026       | imx_ec_sv_v1.1.0
 1.0.0   | Initial release                     | Mar 11<sup>th</sup> 2025       | imx_ec_sv_v1.0
 
 ## Licensing
