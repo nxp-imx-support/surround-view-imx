@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <!-- Refresh - reload xml file -->
+    <item android:id="@+id/item_reload"
+          android:title="@string/reload"
+          android:showAsAction="never" />
+
+    <!-- Show Path to Content directory -->
+    <item android:id="@+id/item_show_path"
+          android:title="@string/show_path"
+          android:showAsAction="never"/>
+</menu>

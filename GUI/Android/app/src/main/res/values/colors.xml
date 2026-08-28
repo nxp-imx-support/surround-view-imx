@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <resources>
+    <color name="nxp_color_black">#000000</color>
+    <color name="nxp_color_white">#FFFFFF</color>
+    <color name="nxp_color_orange">#F9B500</color>
+    <color name="nxp_color_blue">#7BB1DB</color>
+    <color name="nxp_color_green">#C9D200</color>
+    <color name="nxp_color_blue_dark">#003DA5</color>
+    <color name="nxp_color_grey">#C8C9C7</color>
+    <color name="nxp_color_grey_light">#EBEBEB</color>
+    <color name="nxp_color_grey_dark">#3C3C3C</color>
+  </resources>

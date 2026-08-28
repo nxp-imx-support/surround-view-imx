@@ -1,0 +1,26 @@
+# Use WebKit style for all options not specifically set in the configuration below.
+BasedOnStyle: WebKit
+
+# Break before operators that aren’t assignments.
+BreakBeforeBinaryOperators: NonAssignment
+
+# Control of individual brace wrapping cases.
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterClass: true
+    AfterFunction: true
+    AfterControlStatement: false
+    AfterEnum: true
+    AfterNamespace: false
+    AfterStruct: true
+    AfterObjCDeclaration: true
+
+# Insert a newline at end of file if missing.
+InsertNewlineAtEOF: true
+
+# Align trailing comments.
+AlignTrailingComments:
+  Kind: Always
+
+# Leave comments untouched.
+ReflowComments: Never

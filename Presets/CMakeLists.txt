@@ -1,0 +1,62 @@
+# Copyright 2026 NXP
+# SPDX-License-Identifier: BSD-3-Clause
+
+cmake_minimum_required(VERSION 3.13)
+
+project(Presets)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMake")
+
+# Configure Presets and Settings according to config
+if(${SETTINGS_DEFAULT_SRC} STREQUAL "image")
+    include("image")
+elseif(${SETTINGS_DEFAULT_SRC} STREQUAL "video")
+    include("video")
+else()
+    if(${WINDOWING_SYSTEM} STREQUAL "Android")
+        if(${DEVICE} STREQUAL "IMX9")
+            include("imx9-android")
+        elseif(${DEVICE} STREQUAL "IMX8")
+            include("imx8-android")
+        else()
+            message(WARNING "Unkown device. Generating Settings for i.MX9")
+            include("imx9-android")
+        endif()
+    else()
+        if(${DEVICE} STREQUAL "IMX9")
+            if(USE_DPU_DEWARP)
+                include("imx9-linux-gst-dpu-dewarp")
+            else()
+                include("imx9-linux-gst")
+            endif()
+        elseif(${DEVICE} STREQUAL "IMX8")
+            include("imx8-linux-v4l2")
+        else()
+            message(WARNING "Unkown device. Generating Settings for i.MX9")
+            include("imx9-linux-gst")
+        endif()
+    endif()
+endif()
+
+# Install Presets and configure Settings
+if(${WINDOWING_SYSTEM} STREQUAL "Android")
+    file(COPY ${PRESETS} DESTINATION ${ANDROID_OUTPUT_MAIN}/assets/Content/Generated)
+    configure_file(Settings.xml.in ${ANDROID_OUTPUT_MAIN}/assets/Content/Settings.xml @ONLY)
+else()
+    install(DIRECTORY ${PRESETS} DESTINATION ${INSTALL_DIRECTORY}/Content/Generated)
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Settings.xml.in ${CMAKE_CURRENT_BINARY_DIR}/Content/Settings.xml @ONLY)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Content/Settings.xml DESTINATION ${INSTALL_DIRECTORY}/Content)
+endif()
+
+# Generate all configs
+if(SETTINGS_GENERATE_ALL)
+    file(GLOB ALL_CONFIG_FILES "CMake/*.cmake")
+    foreach(CONFIG_FILE ${ALL_CONFIG_FILES})
+        get_filename_component(CONFIG_NAME ${CONFIG_FILE} NAME_WE)
+        include(${CONFIG_NAME})
+        configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Settings.xml.in ${CMAKE_CURRENT_BINARY_DIR}/Content/Settings/Settings-${CONFIG_NAME}.xml @ONLY)
+    endforeach ()
+    if(NOT ${WINDOWING_SYSTEM} STREQUAL "Android")
+        install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Content/Settings DESTINATION ${INSTALL_DIRECTORY}/Content)
+    endif()
+endif()

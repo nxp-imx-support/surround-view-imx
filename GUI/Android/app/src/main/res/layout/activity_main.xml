@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    tools:context=".MainActivity">
+
+    <FrameLayout
+        android:id="@+id/layout_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu"
+            android:background="@color/nxp_color_grey_dark"
+            android:textColor="@color/nxp_color_white"
+            android:textSize="24sp" />
+
+        <FrameLayout
+            android:id="@+id/surface_view_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:visibility="visible" >
+
+        <Button
+            android:id="@+id/dummy"
+            android:layout_width="1px"
+            android:layout_height="1px"
+            android:textColor="@color/nxp_color_grey_dark"
+            android:background="@color/nxp_color_white" />
+
+        <LinearLayout
+            android:id="@+id/content_controls"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/nxp_color_white"
+            android:orientation="vertical"
+            tools:ignore="UselessParent" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+                    <Button
+                        android:id="@+id/button_capturing"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/capturing"
+                        android:textColor="@color/nxp_color_grey_dark"
+                        android:background="@color/nxp_color_white"
+                        android:textSize="24sp" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:background="@color/nxp_color_orange" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.2"
+                        android:background="@color/nxp_color_blue" />
+                    <Button
+                        android:id="@+id/button_calibration"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/calibration"
+                        android:textColor="@color/nxp_color_grey_dark"
+                        android:background="@color/nxp_color_white"
+                        android:textSize="24sp" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.2"
+                        android:background="@color/nxp_color_blue" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" >
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:background="@color/nxp_color_green" />
+                    <Button
+                        android:id="@+id/button_render"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/render"
+                        android:textColor="@color/nxp_color_grey_dark"
+                        android:background="@color/nxp_color_white"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>
