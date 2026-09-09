@@ -1,7 +1,7 @@
 # i.MX Surround View
 
 <!----- Boards ----->
-[![License badge](https://img.shields.io/badge/License-BSD_3_Clause-red)](./BSD_3_Clause.txt) [![Board badge](https://img.shields.io/badge/Board-i.MX_95-blue)](https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-9-processors/i-mx-95-applications-processor-family-high-performance-safety-enabled-platform-with-eiq-neutron-npu:iMX95)
+[![License badge](https://img.shields.io/badge/License-BSD_3_Clause-red)](./Licenses/BSD%2D3%2DClause.txt) [![Board badge](https://img.shields.io/badge/Board-i.MX_95-blue)](https://www.nxp.com/products/processors-and-microcontrollers/arm-processors/i-mx-applications-processors/i-mx-9-processors/i-mx-95-applications-processor-family-high-performance-safety-enabled-platform-with-eiq-neutron-npu:iMX95)
 ![Language badge](https://img.shields.io/badge/Language-C++-yellow) ![Category badge](https://img.shields.io/badge/Category-Multimedia-green)
 
 The NXP Surround View System is a technology which provides a 360-degree wraparound view that can be used for automotive, industrial, and consumer use cases. Providing a 360-degree view assists the driver of an automobile in parking the vehicle safely. Industrial and consumer use cases include building, store, and home views of the surrounding property or interior of key rooms for security, safety, and key retail use cases such as customer counting.
@@ -15,7 +15,7 @@ The surround view system is a standalone application that relies on:
 - **OpenGL-ES** for 3D rendering,
 - **OpenCV** for camera calibration and distortion correction.
 
-![SystemArchitecture](Doc/Images/SystemArchitecture.svg)
+![SystemArchitecture](images/SystemArchitecture.svg)
 
 The surround view application can be run in 3 different modes:
 
@@ -26,7 +26,7 @@ The surround view application can be run in 3 different modes:
 The diagram below shows the calibration steps using the 3 runtime modes.
 An extra offline step, running on Windows, is required for Lens Calibration.
 
-![Software](Doc/Images/SoftwareSequence.svg)
+![Software](images/SoftwareSequence.svg)
 
 ### 1 Capturing
 
@@ -92,14 +92,14 @@ GPU frequency       | 1 GHz
 
 ### 1 Hardware connection
 
-![HardwareConnection](Doc/Images/HardwareConnection.jpg)
+![HardwareConnection](images/HardwareConnection.jpg)
 
 ### 2 Camera stand
 
 Use camera stand for mounting 4 cameras.
 Printable 3D model files are provided in the [CamStand](./Tools/CamStand/) folder for the enclosure of supported cameras.
 
-![CameraStand](Doc/Images/CameraStand.jpg)
+![CameraStand](images/CameraStand.jpg)
 
 ### 3 Device tree
 
@@ -270,15 +270,15 @@ The Android app follows the same workflow as the Linux version described in [SVA
 
 Here is the demo using camera input:
 
-![Camera](Doc/Images/Camera.gif)
+![Camera](images/Camera.gif)
 
 Demo using video input:
 
-![Video](Doc/Images/Video.gif)
+![Video](images/Video.gif)
 
 Demo with Pedestrian detection:
 
-![PedestrianDetection](Doc/Images/PedestrianDetection.jpg)
+![PedestrianDetection](images/PedestrianDetection.jpg)
 
 ### Performance
 
